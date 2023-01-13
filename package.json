@@ -7,8 +7,11 @@
     "registry": "https://registry.npmjs.org/"
   },
   "scripts": {
-    "dev": "cp node_modules/wasm-imagemagick/dist/magick.wasm dist/ && cp node_modules/wasm-imagemagick/dist/magick.js dist/ && watchify src/index.js -o dist/phash.js",
-    "build": "cp node_modules/wasm-imagemagick/dist/magick.wasm dist/ && cp node_modules/wasm-imagemagick/dist/magick.js dist/ && browserify src/index.js -o dist/phash.js",
+    "// TODO": "restore original commands when https://github.com/KnicKnic/WASM-ImageMagick/pull/161 is merged",
+    "dev": "cp node_modules/wasm-imagemagick/dist/magick.wasm dist/ && cp node_modules/wasm-imagemagick/dist/magick.js dist/ && gsed -i '119 a \\ \\ \\ \\ FS.close(dir);' dist/magick.js && watchify src/index.js -o dist/phash.js",
+    "build": "cp node_modules/wasm-imagemagick/dist/magick.wasm dist/ && cp node_modules/wasm-imagemagick/dist/magick.js dist/ && gsed -i '119 a \\ \\ \\ \\ FS.close(dir);' dist/magick.js && browserify src/index.js -o dist/phash.js",
+    "dev_original": "cp node_modules/wasm-imagemagick/dist/magick.wasm dist/ && cp node_modules/wasm-imagemagick/dist/magick.js dist/ && watchify src/index.js -o dist/phash.js",
+    "build_original": "cp node_modules/wasm-imagemagick/dist/magick.wasm dist/ && cp node_modules/wasm-imagemagick/dist/magick.js dist/ && browserify src/index.js -o dist/phash.js",
     "lint": "eslint ./ --ext .js .",
     "lint:fix": "eslint --fix ./ --ext .js .",
     "test": "npx jest"

@@ -117,6 +117,7 @@ processFiles = function () {
         transfer.push(file.content.buffer)
       }
     }
+    FS.close(dir);
     postMessage(message) //, transfer)
   }
   Module.messagesToProcess = []
