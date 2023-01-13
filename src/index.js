@@ -29,9 +29,10 @@ const pHash = {
     return this._calculateHash(data)
   },
 
-  _readFileAsArrayBuffer(input) {
-    if (input.constructor !== File) throw new Error('Input must be type of File')
-    if (!supportedTypes.includes(input.type))
+  _readFileAsArrayBuffer(inputOrBuffer) {
+    if (inputOrBuffer.constructor === ArrayBuffer) return inputOrBuffer;
+    if (inputOrBuffer.constructor !== File) throw new Error('Input must be type of File')
+    if (!supportedTypes.includes(inputOrBuffer.type))
       throw new Error(
         `Input file must be of one of the supported types: ${supportedTypes.join(', ')}`
       )
@@ -43,7 +44,7 @@ const pHash = {
           resolve(reader.result)
         }
       }
-      reader.readAsArrayBuffer(input)
+      reader.readAsArrayBuffer(inputOrBuffer)
     })
   },
 

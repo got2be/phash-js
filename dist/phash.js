@@ -4003,9 +4003,10 @@ var pHash = {
       }, _callee);
     }))();
   },
-  _readFileAsArrayBuffer: function _readFileAsArrayBuffer(input) {
-    if (input.constructor !== File) throw new Error('Input must be type of File');
-    if (!supportedTypes.includes(input.type)) throw new Error("Input file must be of one of the supported types: ".concat(supportedTypes.join(', ')));
+  _readFileAsArrayBuffer: function _readFileAsArrayBuffer(inputOrBuffer) {
+    if (inputOrBuffer.constructor === ArrayBuffer) return inputOrBuffer;
+    if (inputOrBuffer.constructor !== File) throw new Error('Input must be type of File');
+    if (!supportedTypes.includes(inputOrBuffer.type)) throw new Error("Input file must be of one of the supported types: ".concat(supportedTypes.join(', ')));
     return new Promise(function (resolve) {
       var reader = new FileReader();
 
@@ -4015,7 +4016,7 @@ var pHash = {
         }
       };
 
-      reader.readAsArrayBuffer(input);
+      reader.readAsArrayBuffer(inputOrBuffer);
     });
   },
   _resizeImage: function _resizeImage(content) {
